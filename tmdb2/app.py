@@ -114,7 +114,7 @@ if selected == "Home Page":
 elif selected == "Content Based Movie Recommendation":
     @st.cache_data
     def load_movie_titles():
-        movies = pd.read_csv(r"top_100.csv")
+        movies = pd.read_csv('tmdb2/top_100.csv')
         return movies['title'].tolist()
 
     movie_titles = load_movie_titles()
