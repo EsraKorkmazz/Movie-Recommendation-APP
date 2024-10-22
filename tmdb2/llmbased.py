@@ -8,11 +8,9 @@ from dotenv import load_dotenv
 
 dotenv.load_dotenv()
 
-# API Yapılandırmaları
 TMDB_API_KEY = st.secrets["TMDB_API_KEY"]
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
-OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
-OPENAI_CLIENT = OpenAI(api_key=OPENAI_API_KEY)
+OPENAI_CLIENT = OpenAI(api_key=st.secrets["OPENAI_API_KEY"]) 
 
 if OPENAI_CLIENT is None:
     st.error("OpenAI API anahtarı yüklenemedi. Lütfen .env dosyasını kontrol edin.")
