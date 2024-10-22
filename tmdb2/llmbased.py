@@ -13,6 +13,11 @@ TMDB_API_KEY = os.getenv("TMDB_API_KEY")
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
 OPENAI_CLIENT = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
+if OPENAI_CLIENT is None:
+    st.error("OpenAI API anahtarı yüklenemedi. Lütfen .env dosyasını kontrol edin.")
+else:
+    OPENAI_CLIENT = OpenAI(api_key=OPENAI_CLIENT)
+
 async def get_movie_recommendations(query):
     """OpenAI API kullanarak film önerileri al"""
     prompt = f"List 10 movies that match these criteria: {query}. Just list the movie titles, one per line, without any additional text or numbering."
