@@ -11,8 +11,9 @@ import dotenv
 
 dotenv.load_dotenv()
 
-# Set page configuration
 st.set_page_config(
+    page_title="Movie Recommendation System",
+    layout="wide",
     menu_items={
         "About": "For More Information\n" + "https://github.com/EsraKorkmazz/Movie-Recommendation-APP"
     }
@@ -27,8 +28,6 @@ def fetch_popular_movies(api_key):
     else:
         st.error("Unable to fetch data from TMDb. Please try again later.")
         return []
-
-st.set_page_config(page_title="Movie Recommendation System", layout="wide")
 
 placeholder = st.empty()
 
