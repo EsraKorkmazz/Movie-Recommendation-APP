@@ -95,7 +95,7 @@ if selected == "Home Page":
 
     
     st.subheader("🍿 Currently Popular Movies")
-    api_key = os.getenv("TMDB_API_KEY")
+    api_key = st.secrets["tmdb"]["TMDB_API_KEY"]
     popular_movies = fetch_popular_movies(api_key)
 
     if popular_movies:
