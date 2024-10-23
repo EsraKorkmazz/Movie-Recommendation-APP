@@ -12,12 +12,10 @@ dotenv.load_dotenv()
 
 TMDB_API_KEY = "TMDB_API_KEY"
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
-OPENAI_CLIENT = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+#OPENAI_CLIENT = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-if OPENAI_CLIENT is None:
-    st.error("OpenAI API anahtarı yüklenemedi. Lütfen .env dosyasını kontrol edin.")
-else:
-    OPENAI_CLIENT = OpenAI(api_key=OPENAI_CLIENT)
+OPENAI_API_KEY = st.secrets["openai"]["api_key"]
+OPENAI_CLIENT = OpenAI(api_key=OPENAI_API_KEY)
 
 async def get_movie_recommendations(query):
     """OpenAI API kullanarak film önerileri al"""
