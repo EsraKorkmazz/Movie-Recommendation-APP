@@ -79,4 +79,3 @@ The dataset (top_100.csv) contains a collection of movies with their description
 📝 License
 
 This project is open-source and available under the MIT License.
-![Uploading image.png…]()
