@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv() 
 dotenv.load_dotenv()
 
-TMDB_API_KEY = "TMDB_API_KEY"
+TMDB_API_KEY = st.secrets["tmdb"]["TMDB_API_KEY"]
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
 #OPENAI_CLIENT = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
