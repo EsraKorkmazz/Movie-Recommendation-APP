@@ -5,7 +5,7 @@ from fuzzywuzzy import process
 import requests
 import os
 
-movies = pd.read_csv('tmdb2/top_100.csv')
+movies = pd.read_csv('Movie-Recommendation-APP/tmdb2/top_100.csv')
 movies = movies.drop(columns=["crew", "cast", "vote_count"], axis=1).drop_duplicates(keep=False).dropna()
 movies['overview'] = movies['overview'].str.lower().str.replace('[^a-zA-Z0-9]', '')
 
