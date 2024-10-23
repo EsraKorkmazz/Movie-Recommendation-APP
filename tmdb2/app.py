@@ -10,8 +10,8 @@ import os
 import dotenv
 from dotenv import load_dotenv
 
-#load_dotenv() 
-#dotenv.load_dotenv()
+load_dotenv() 
+dotenv.load_dotenv()
 
 st.set_page_config(
     page_title="Movie Recommendation System",
@@ -22,7 +22,7 @@ st.set_page_config(
 )
 
 def fetch_popular_movies(api_key):
-    st.secrets["tmdb"]["TMDB_API_KEY"]
+    api_key = st.secrets["tmdb"]["TMDB_API_KEY"]
     url = f"https://api.themoviedb.org/3/movie/popular?api_key={api_key}&language=en-US&page=1"
     response = requests.get(url)
     if response.status_code == 200:
