@@ -6,7 +6,7 @@ import time
 
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
 TMDB_API_KEY = os.getenv("TMDB_API_KEY")
-data = pd.read_csv('Movie-Recommendation-APP/tmdb2/top_100.csv')
+data = pd.read_csv('tmdb2/top_100.csv')
 
 
 def get_movie_poster(movie_id, retries=3, delay=5):
