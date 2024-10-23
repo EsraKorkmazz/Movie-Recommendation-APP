@@ -2,16 +2,15 @@ import asyncio
 import aiohttp
 import streamlit as st
 from openai import OpenAI
-import os
-import dotenv
-from dotenv import load_dotenv
+#import os
+#import dotenv
+#from dotenv import load_dotenv
 
-load_dotenv() 
-dotenv.load_dotenv()
+#load_dotenv() 
+#dotenv.load_dotenv()
 
 TMDB_API_KEY = st.secrets["tmdb"]["TMDB_API_KEY"]
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
-#OPENAI_CLIENT = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 OPENAI_API_KEY = st.secrets["openai"]["api_key"]
 OPENAI_CLIENT = OpenAI(api_key=OPENAI_API_KEY)

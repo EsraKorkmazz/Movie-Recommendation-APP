@@ -3,7 +3,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 from fuzzywuzzy import process
 import requests
-import os
 import streamlit as st
 
 movies = pd.read_csv('tmdb2/top_100.csv')
