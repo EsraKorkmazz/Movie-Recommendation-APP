@@ -9,11 +9,9 @@ movies = pd.read_csv('tmdb2/top_100.csv')
 movies = movies.drop(columns=["crew", "cast", "vote_count"], axis=1).drop_duplicates(keep=False).dropna()
 movies['overview'] = movies['overview'].str.lower().str.replace('[^a-zA-Z0-9]', '')
 
-# TF-IDF Vectorization
 tfidf = TfidfVectorizer(stop_words='english')
 tfidf_matrix = tfidf.fit_transform(movies['overview'])
 
-# Cosine Similarity
 cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
 
 def clean_title(title):
@@ -36,8 +34,6 @@ def get_movie_poster(movie_id):
 
 def get_content_based_recommendations(movie_title, n_recommendations=10):
     cleaned_title = clean_title(movie_title)
-    
-    # Fuzzy matching
     closest_title, score = process.extractOne(cleaned_title, title_to_index.keys())
     
     if score < 90:  # Threshold

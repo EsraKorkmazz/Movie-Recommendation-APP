@@ -2,12 +2,6 @@ import asyncio
 import aiohttp
 import streamlit as st
 from openai import OpenAI
-#import os
-#import dotenv
-#from dotenv import load_dotenv
-
-#load_dotenv() 
-#dotenv.load_dotenv()
 
 TMDB_API_KEY = st.secrets["tmdb"]["TMDB_API_KEY"]
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
@@ -29,7 +23,7 @@ async def get_movie_recommendations(query):
         )
         return response.choices[0].message.content
     except Exception as e:
-        st.error(f"OpenAI API hatası: {str(e)}")
+        st.error(f"OpenAI API error: {str(e)}")
         return None
 
 async def fetch_movie_detail(session, title):
@@ -43,7 +37,6 @@ async def fetch_movie_detail(session, title):
         "query": title,
         "language": "en-EN"
     }
-    
     try:
         async with session.get(search_url, params=params) as response:
             data = await response.json()
@@ -57,12 +50,11 @@ async def fetch_movie_detail(session, title):
                     "api_key": TMDB_API_KEY,
                     "language": "en-EN"
                 }
-                
                 async with session.get(detail_url, params=detail_params) as detail_response:
                     detail_data = await detail_response.json()
                     
                     return {
-                        "id": movie_id,  # Include movie ID
+                        "id": movie_id,
                         "title": detail_data["title"],
                         "poster_path": detail_data.get("poster_path"),
                         "imdb_rating": detail_data.get("vote_average"),
@@ -71,38 +63,36 @@ async def fetch_movie_detail(session, title):
                     }
                     
     except Exception as e:
-        st.write(f"Film detayları alınırken hata: {str(e)}")
+        st.write(f"Error while fetching movie details: {str(e)}")
     return None
 
 async def get_movie_details(movie_titles):
-    """Tüm filmler için detayları getir"""
+    """Fetch details for all movies"""
     async with aiohttp.ClientSession() as session:
         tasks = [fetch_movie_detail(session, title) for title in movie_titles]
         results = await asyncio.gather(*tasks)
         return [movie for movie in results if movie is not None]
 
 def extract_movie_titles(text):
-    """OpenAI yanıtından film başlıklarını ayıkla"""
+    """Extract movie titles from the OpenAI response"""
     if not text:
         return []
     return [line.strip() for line in text.split('\n') if line.strip()]
 
 def movie_recommendations_page():
-    st.title("Film Öneri Sistemi")
-    query = st.text_input("Film önerisi için kriterleri girin:")
+    st.title("Movie Recommendation System")
+    query = st.text_input("Enter the criteria for movie recommendations:")
     
     if query:
-        with st.spinner('Film önerileri alınıyor...'):
-            # OpenAI'dan önerileri al
+        with st.spinner('Fetching movie recommendations...'):
             recommendations = asyncio.run(get_movie_recommendations(query))
             movie_titles = extract_movie_titles(recommendations)
             
             if movie_titles:
-                # TMDB'den film detaylarını al
                 movie_details = asyncio.run(get_movie_details(movie_titles))
                 
                 if movie_details:
-                    st.write("\n### Önerilen Filmler:")
+                    st.write("\n### Recommended Movies")
                     for movie in movie_details:
                         col1, col2 = st.columns([1, 2])
                         
@@ -119,13 +109,13 @@ def movie_recommendations_page():
                             st.markdown(f"### [{movie['title']}]({movie_url})")
                             st.write(f"IMDB Puanı: {round(movie['imdb_rating'], 1)}/10")
                             if movie.get('release_date'):
-                                st.write(f"Yayın Tarihi: {movie['release_date']}")
+                                st.write(f"Release Date: {movie['release_date']}")
                             st.write(movie['overview'])
                             
                 else:
-                    st.error("Film detayları alınamadı.")
+                    st.error("Movie details could not be retrieved.")
             else:
-                st.error("Film önerileri alınamadı.")
+                st.error("Movie recommendations could not be retrieved.")
 
 if __name__ == "__main__":
     movie_recommendations_page()

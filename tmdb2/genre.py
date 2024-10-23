@@ -8,7 +8,6 @@ TMDB_BASE_URL = "https://api.themoviedb.org/3"
 TMDB_API_KEY = os.getenv("TMDB_API_KEY")
 data = pd.read_csv('tmdb2/top_100.csv')
 
-
 def get_movie_poster(movie_id, retries=3, delay=5):
     url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={TMDB_API_KEY}"
     for attempt in range(retries):
@@ -22,7 +21,7 @@ def get_movie_poster(movie_id, retries=3, delay=5):
         except requests.ConnectionError:
             print(f"Connection error. Retrying in {delay} seconds...")
             time.sleep(delay)
-    return None  # Return None if all retries fail
+    return None
 
 def recommend_movies_by_user_genre(selected_genre, data, top_n=30):
     data['genres'] = data['genres'].fillna('')
@@ -44,7 +43,6 @@ def main():
         st.session_state['selected_genre'] = selected_genre 
         st.write(f"Recommendations loaded for genre: {selected_genre}")
 
-    # Display results if they exist in session state
     if 'recommended_movies' in st.session_state:
         recommended_movies = st.session_state['recommended_movies']
         st.subheader(f"Top {len(recommended_movies)} Movies in {st.session_state['selected_genre']} Genre")
