@@ -5,7 +5,7 @@ from content_base import get_content_based_recommendations
 from genre import main
 from streamlit_option_menu import option_menu
 import time
-from llmbased import MovieRecommender
+from llmbased import MovieRecommender, movie_recommendations_page
 import os
 import dotenv
 from dotenv import load_dotenv
