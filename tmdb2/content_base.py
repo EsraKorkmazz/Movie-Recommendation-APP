@@ -4,6 +4,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from fuzzywuzzy import process
 import requests
 import os
+import streamlit as st
 
 movies = pd.read_csv('tmdb2/top_100.csv')
 movies = movies.drop(columns=["crew", "cast", "vote_count"], axis=1).drop_duplicates(keep=False).dropna()
@@ -20,7 +21,8 @@ def clean_title(title):
     return title.lower().strip()
 
 title_to_index = {clean_title(title): idx for idx, title in enumerate(movies['title'])}
-TMDB_API_KEY = os.getenv("TMDB_API_KEY") 
+
+TMDB_API_KEY = st.secrets["tmdb"]["TMDB_API_KEY"]
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
 
 def get_movie_poster(movie_id):
