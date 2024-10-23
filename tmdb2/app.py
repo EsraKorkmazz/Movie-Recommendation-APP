@@ -8,7 +8,9 @@ import time
 from llmbased import movie_recommendations_page
 import os
 import dotenv
+from dotenv import load_dotenv
 
+load_dotenv() 
 dotenv.load_dotenv()
 
 st.set_page_config(
