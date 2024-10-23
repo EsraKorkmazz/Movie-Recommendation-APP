@@ -7,7 +7,11 @@ import dotenv
 from dotenv import load_dotenv
 
 load_dotenv() 
-#dotenv.load_dotenv()
+dotenv.load_dotenv()
+
+api_key = os.getenv("OPENAI_API_KEY")
+st.write(f"API Key: {api_key}")
+
 
 TMDB_API_KEY = "TMDB_API_KEY"
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
