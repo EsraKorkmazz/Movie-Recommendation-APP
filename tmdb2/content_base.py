@@ -6,11 +6,12 @@ import requests
 import streamlit as st
 
 movies = pd.read_csv('tmdb2/top_100.csv')
-movies = movies.drop(columns=["crew", "cast", "vote_count"], axis=1).drop_duplicates(keep=False).dropna()
-movies['overview'] = movies['overview'].str.lower().str.replace('[^a-zA-Z0-9]', '')
+movies['combined'] = movies['overview'] + movies['keywords']+ ' ' + movies['cast'] + ' ' + movies['crew']
+movies['combined'] = movies['combined'].str.lower().str.replace('[^a-zA-Z0-9]', '')
+movies = movies.drop(columns =['overview','keywords','cast','crew','vote_count']).drop_duplicates(keep=False).dropna()
 
 tfidf = TfidfVectorizer(stop_words='english')
-tfidf_matrix = tfidf.fit_transform(movies['overview'])
+tfidf_matrix = tfidf.fit_transform(movies['combined'])
 
 cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
 
@@ -35,7 +36,6 @@ def get_movie_poster(movie_id):
 def get_content_based_recommendations(movie_title, n_recommendations=10):
     cleaned_title = clean_title(movie_title)
     closest_title, score = process.extractOne(cleaned_title, title_to_index.keys())
-    
     if score < 90:  # Threshold
         return []
     
