@@ -7,7 +7,7 @@ import streamlit as st
 
 movies = pd.read_csv('tmdb2/top_100.csv')
 movies['combined'] = movies['overview'] + movies['keywords']+ ' ' + movies['cast'] + ' ' + movies['crew']
-movies['combined'] = movies['combined'].str.lower().str.replace('[^a-zA-Z0-9]', '')
+movies['combined'] = movies['combined'].str.lower()
 movies = movies.drop(columns =['overview','keywords','cast','crew','vote_count']).drop_duplicates(keep=False).dropna()
 
 tfidf = TfidfVectorizer(stop_words='english')
