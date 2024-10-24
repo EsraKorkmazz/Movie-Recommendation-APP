@@ -46,7 +46,6 @@ def get_content_based_recommendations(movie_title, n_recommendations=10):
     movie_indices = [i[0] for i in sim_scores]
     
     recommended_movies = movies['title'].iloc[movie_indices].tolist()
-    recommended_movies = recommended_movies.sort_values(by='rating', ascending=False)
     recommended_movie_ids = movies['movie_id'].iloc[movie_indices].tolist()
     
     recommendations_with_details = []
