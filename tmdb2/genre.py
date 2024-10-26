@@ -1,9 +1,16 @@
 import requests
 import pandas as pd
 import streamlit as st
+from dotenv import load_dotenv
+import os
 
+load_dotenv() 
+TMDB_API_KEY = os.getenv("TMDB_API_KEY") 
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
-TMDB_API_KEY = "312b27b45aa8ea633a041adb1f7276ff"
+
+if TMDB_API_KEY is None:
+    raise ValueError("TMDB_API_KEY not found. Please check your .env file.")
+
 
 data = pd.read_csv('tmdb2/top_100.csv')
 
