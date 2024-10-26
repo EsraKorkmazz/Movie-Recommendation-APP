@@ -26,9 +26,14 @@ def recommend_movies_by_user_genre(selected_genre, data, top_n=30):
     data['genres'] = data['genres'].fillna('')
     if data['genres'].dtype == object:
         data['genres'] = data['genres'].apply(lambda x: x.split(',') if isinstance(x, str) else [])
-    filtered_movies = data[data['genres'].apply(lambda genres: selected_genre in genres)]
+    
+    # Normalize genre names to lowercase
+    selected_genre_lower = selected_genre.lower()
+    filtered_movies = data[data['genres'].apply(lambda genres: selected_genre_lower in [g.lower() for g in genres])]
+    
     recommended_movies = filtered_movies.sort_values(by='rating', ascending=False).head(top_n)
     return recommended_movies
+
 
 def main():
     st.title("Movie Recommendations by Genre")
@@ -37,6 +42,8 @@ def main():
                                             "Science Fiction", "Thriller", "Family", "Crime", "Fantasy"])
 
     if st.button("Get Recommendations"):
+        if 'recommended_movies' in st.session_state:
+            del st.session_state['recommended_movies']
         recommended_movies = recommend_movies_by_user_genre(selected_genre, data)
         st.session_state['recommended_movies'] = recommended_movies
         st.session_state['selected_genre'] = selected_genre 
