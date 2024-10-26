@@ -33,7 +33,7 @@ def get_movie_poster(movie_id):
             return f"https://image.tmdb.org/t/p/w500{poster_path}"
     return None
 
-def get_content_based_recommendations(movie_title, n_recommendations=10):
+def get_content_based_recommendations(movie_title, n_recommendations=25):
     cleaned_title = clean_title(movie_title)
     closest_title, score = process.extractOne(cleaned_title, title_to_index.keys())
     if score < 90:  # Threshold
