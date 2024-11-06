@@ -138,7 +138,6 @@ elif selected == "Content Based Movie Recommendation":
 
 elif selected == "Select by Genre":
     st.subheader("🎭 Find Movies by Genre")
-    st.write("Select your favorite genre to discover movies.")
     main()
 
 elif selected == "Select by PROMPT":

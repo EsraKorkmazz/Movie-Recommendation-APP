@@ -39,22 +39,14 @@ def safe_eval_genres(genre_str):
         return []
 
 def recommend_movies_by_user_genre(selected_genre, data, top_n=30):
-    # Debug: Print data info
-    st.write("Data Info:", data.info())
-    
     # Make sure genres column exists
     if 'genres' not in data.columns:
         st.error("The 'genres' column is missing in the CSV file.")
         return pd.DataFrame()
     
-    # Show sample of raw genres data
-    st.write("Raw genres sample:", data['genres'].head())
     
     # Process genres
     data['genres_list'] = data['genres'].apply(safe_eval_genres)
-    
-    # Show processed genres
-    st.write("Processed genres sample:", data['genres_list'].head())
     
     # Convert selected genre to lowercase for comparison
     selected_genre_lower = selected_genre.lower()
@@ -64,18 +56,12 @@ def recommend_movies_by_user_genre(selected_genre, data, top_n=30):
         lambda genres: any(selected_genre_lower in g.lower() for g in genres)
     )]
     
-    # Debug: Show number of filtered movies
-    st.write(f"Number of movies found for genre '{selected_genre}': {len(filtered_movies)}")
-    
     # Sort by rating and get top N
     recommended_movies = filtered_movies.sort_values(by='rating', ascending=False).head(top_n)
     return recommended_movies
 
 def main():
     st.title("Movie Recommendations by Genre")
-    
-    # Debug: Show initial data
-    st.write("Total number of movies in dataset:", len(data))
     
     selected_genre = st.selectbox(
         "Select a genre to get movie recommendations:", 
@@ -89,7 +75,6 @@ def main():
         recommended_movies = recommend_movies_by_user_genre(selected_genre, data)
         st.session_state['recommended_movies'] = recommended_movies
         st.session_state['selected_genre'] = selected_genre
-        st.write(f"Recommendations loaded for genre: {selected_genre}")
     
     if 'recommended_movies' in st.session_state:
         recommended_movies = st.session_state['recommended_movies']
