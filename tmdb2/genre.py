@@ -23,18 +23,28 @@ def get_movie_poster(movie_id, retries=3, delay=5):
     return None
 
 def recommend_movies_by_user_genre(selected_genre, data, top_n=30):
+    # Check if 'genres' column has data
+    if 'genres' not in data.columns:
+        st.error("The 'genres' column is missing in the CSV file.")
+        return pd.DataFrame()
+    
+    # Fill missing genres and split if necessary
     data['genres'] = data['genres'].fillna('')
     if data['genres'].dtype == object:
         data['genres'] = data['genres'].apply(lambda x: x.split(',') if isinstance(x, str) else [])
     
-    # Normalize genre names to lowercase
+    # Check data format after processing
+    st.write("Processed genres example:", data['genres'].head())
+
+    # Normalize genre names to lowercase for comparison
     selected_genre_lower = selected_genre.lower()
-    filtered_movies = data[data['genres'].apply(lambda genres: selected_genre_lower in [g.lower() for g in genres])]
+    filtered_movies = data[data['genres'].apply(lambda genres: selected_genre_lower in [g.strip().lower() for g in genres])]
     
+    # Debugging output to see what is being filtered
+    st.write(f"Movies filtered for genre '{selected_genre}':", filtered_movies[['title', 'genres']])
+
     recommended_movies = filtered_movies.sort_values(by='rating', ascending=False).head(top_n)
     return recommended_movies
-
-
 def main():
     st.title("Movie Recommendations by Genre")
     selected_genre = st.selectbox("Select a genre to get movie recommendations:", 

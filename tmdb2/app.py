@@ -91,10 +91,9 @@ if selected == "Home Page":
     st.subheader("🍿 Currently Popular Movies")
     api_key = st.secrets["tmdb"]["TMDB_API_KEY"]
     popular_movies = fetch_popular_movies(api_key)
-
     if popular_movies:
         st.markdown("Here are some of the most popular movies right now:")
-        num_columns = 3  
+        num_columns = 3 
         cols = st.columns(num_columns)
         for idx, movie in enumerate(popular_movies):
             with cols[idx % num_columns]: 
