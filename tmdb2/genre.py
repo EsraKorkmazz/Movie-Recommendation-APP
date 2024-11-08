@@ -44,19 +44,15 @@ def recommend_movies_by_user_genre(selected_genre, data, top_n=30):
         st.error("The 'genres' column is missing in the CSV file.")
         return pd.DataFrame()
     
-    
-    # Process genres
     data['genres_list'] = data['genres'].apply(safe_eval_genres)
-    
-    # Convert selected genre to lowercase for comparison
+
     selected_genre_lower = selected_genre.lower()
     
-    # Filter movies
     filtered_movies = data[data['genres_list'].apply(
         lambda genres: any(selected_genre_lower in g.lower() for g in genres)
     )]
     
-    # Sort by rating and get top N
+    # sort by rating and get top N
     recommended_movies = filtered_movies.sort_values(by='rating', ascending=False).head(top_n)
     return recommended_movies
 
