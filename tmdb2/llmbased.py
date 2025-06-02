@@ -9,14 +9,13 @@ TMDB_BASE_URL = "https://api.themoviedb.org/3"
 
 OPENAI_API_KEY = st.secrets["openai"]["api_key"]
 openai.api_key = st.secrets["openai"]["api_key"]
-client = OpenAI(api_key=st.secrets["openai"]["api_key"])
 
 async def get_movie_recommendations(query):
     """OpenAI API kullanarak film önerileri al"""
     prompt = f"List 10 movies that match these criteria: {query}. Just list the movie titles, one per line, without any additional text or numbering."
     
     try:
-        response = client.chat.completions.create(
+        response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a movie recommendation expert. Provide only movie titles without any additional text."},
