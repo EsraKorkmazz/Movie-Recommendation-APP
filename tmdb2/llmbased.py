@@ -2,7 +2,6 @@ import asyncio
 import aiohttp
 import streamlit as st
 from openai import OpenAI
-import openai
 
 TMDB_API_KEY = st.secrets["tmdb"]["TMDB_API_KEY"]
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
