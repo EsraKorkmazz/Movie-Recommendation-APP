@@ -7,7 +7,7 @@ TMDB_API_KEY = st.secrets["tmdb"]["TMDB_API_KEY"]
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
 
 OPENAI_API_KEY = st.secrets["openai"]["api_key"]
-OPENAI_CLIENT = OpenAI(api_key=OPENAI_API_KEY)
+openai.api_key = st.secrets["openai"]["api_key"]
 
 async def get_movie_recommendations(query):
     """OpenAI API kullanarak film önerileri al"""
