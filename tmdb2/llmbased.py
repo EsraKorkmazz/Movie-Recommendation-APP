@@ -16,7 +16,7 @@ async def get_movie_recommendations(query):
     prompt = f"List 10 movies that match these criteria: {query}. Just list the movie titles, one per line, without any additional text or numbering."
 
     try:
-        response = await client.chat.completions.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a movie recommendation expert. Provide only movie titles without any additional text."},
