@@ -38,7 +38,7 @@ with placeholder.container():
         unsafe_allow_html=True
     )
 
-time.sleep(3)
+time.sleep(2)
 
 placeholder.empty()
 
