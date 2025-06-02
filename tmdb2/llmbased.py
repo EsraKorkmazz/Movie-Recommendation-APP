@@ -2,6 +2,7 @@ import asyncio
 import aiohttp
 import streamlit as st
 from openai import OpenAI
+import openai
 
 TMDB_API_KEY = st.secrets["tmdb"]["TMDB_API_KEY"]
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
@@ -15,7 +16,7 @@ async def get_movie_recommendations(query):
     
     try:
         response = OPENAI_CLIENT.chat.completions.create(
-            model="gpt-4",
+            model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a movie recommendation expert. Provide only movie titles without any additional text."},
                 {"role": "user", "content": prompt}
